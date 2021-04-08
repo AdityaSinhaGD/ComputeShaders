@@ -65,5 +65,5 @@ public:
 
 	void updateCustom(vec3 rayOrigin, vec3 spherePosition, float sphereRadius);
 
-	void drawCustom(float particle_size, mat4 view_mat, mat4 proj_mat, vec3 rayOrigin);
+	void drawCustom(float particle_size, mat4 view_mat, mat4 proj_mat, vec3 rayOrigin, vec3 spherePosition);
 };

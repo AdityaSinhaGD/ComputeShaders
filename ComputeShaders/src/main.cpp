@@ -90,7 +90,7 @@ void display()
 	glDisable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
 	//parSys.draw(3.0f, g_cam.viewMat, g_cam.projMat);
-	parSys.drawCustom(3.0f, g_cam.viewMat, g_cam.projMat, rayOrigin);
+	parSys.drawCustom(3.0f, g_cam.viewMat, g_cam.projMat, rayOrigin, spherePosition);
 	g_cam.drawGrid();
 	g_cam.drawCoordinateOnScreen(g_winWidth, g_winHeight);
 	g_cam.drawCoordinate();
@@ -149,6 +149,24 @@ void keyboard(unsigned char key, int x, int y)
 		break;
 	case ' ':
 		g_cam.PrintProperty();
+		break;
+	case 'w':
+		spherePosition += vec3(0.0, 0.0, 0.1f);
+		break;
+	case 's':
+		spherePosition -= vec3(0.0, 0.0, 0.1f);
+		break;
+	case 'a':
+		spherePosition -= vec3(0.1f, 0.0f, 0.0f);
+		break;
+	case 'd':
+		spherePosition += vec3(0.1f, 0.0f, 0.0f);
+		break;
+	case 'u':
+		spherePosition += vec3(0.0f, 0.1f, 0.0f);
+		break;
+	case 'j':
+		spherePosition -= vec3(0.0f, 0.1f, 0.0f);
 		break;
 	}
 }

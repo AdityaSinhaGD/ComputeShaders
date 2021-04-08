@@ -40,7 +40,7 @@ void main()
 
 	if(discriminant<0)
 	{
-		color = Colors[g_id].xyz;
+		color = vec3(0.0,0.0,0.5);
 	}else{
 
 		color = vec3(0.5,0.0,0.0);		

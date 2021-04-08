@@ -378,7 +378,7 @@ void ParticleSystem::updateCustom(vec3 rayOrigin, vec3 spherePosition, float sph
 	glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
 }
 
-void ParticleSystem::drawCustom(float particle_size, mat4 view_mat, mat4 proj_mat, vec3 rayOrigin)
+void ParticleSystem::drawCustom(float particle_size, mat4 view_mat, mat4 proj_mat, vec3 rayOrigin, vec3 spherePosition)
 {
 	glUseProgram(vfShaderProg.id);
 	glMatrixMode(GL_MODELVIEW);
@@ -399,7 +399,7 @@ void ParticleSystem::drawCustom(float particle_size, mat4 view_mat, mat4 proj_ma
 	//custom draw block
 	glUseProgram(0);
 	glPushMatrix();
-	glTranslatef(0.0f, 5.0f, -8.0f);
+	glTranslatef(spherePosition.x, spherePosition.y, spherePosition.z);
 	glutSolidSphere(2.0, 50, 50);
 	glPopMatrix();
 
@@ -409,6 +409,7 @@ void ParticleSystem::drawCustom(float particle_size, mat4 view_mat, mat4 proj_ma
 	glPopMatrix();
 
 	glBegin(GL_LINES);
+	glColor3f(1.0, 0.0, 0.0);
 	glVertex3f(rayOrigin.x, rayOrigin.y, rayOrigin.z);
 	glVertex3f(size_min_point.x, size_min_point.y, size_min_point.z);
 	glVertex3f(rayOrigin.x, rayOrigin.y, rayOrigin.z);
