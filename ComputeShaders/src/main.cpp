@@ -38,12 +38,20 @@ vec3 rayOrigin = vec3(0.0f, 5.0f, 20.0f);
 vec3 spherePosition = vec3(0.0f, 5.0f, -8.0f);
 float sphereRadius = 2.0f;
 
+int resolutionWidth = 128;
+int reolutionHeight = 64;
+
+void initializeParticleSystem()
+{
+	parSys.createCustom(resolutionWidth, reolutionHeight, vec3(-10.0f, 0.0f, -5.0f), vec3(10.0f, 10.0f, -5.0f), c_shader_file, v_shader_file, f_shader_file);
+}
+
 void initialization()
 {
 	/*parSys.create(20, vec3(-10.0f, -10.0f, -10.0f), vec3(10.0f, 10.0f, 10.0f),
 		c_shader_file, v_shader_file, f_shader_file);*/
 
-	parSys.createCustom(128, 64, vec3(-10.0f, 0.0f, -5.0f), vec3(10.0f, 10.0f, -5.0f), c_shader_file, v_shader_file, f_shader_file);
+	initializeParticleSystem();
 
 	g_cam.set(38.0f, 13.0f, 4.0f, 0.0f, 0.0f, 0.0f, g_winWidth, g_winHeight, 45.0f, 0.01f, 10000.0f);
 	g_text.setColor(0.0f, 0.0f, 0.0f);
@@ -167,6 +175,16 @@ void keyboard(unsigned char key, int x, int y)
 		break;
 	case 'j':
 		spherePosition -= vec3(0.0f, 0.1f, 0.0f);
+		break;
+	case '+':
+		resolutionWidth = resolutionWidth >= 8192 ? 8192 : resolutionWidth * 2;
+		reolutionHeight = reolutionHeight >= 4096 ? 4096 : reolutionHeight * 2;
+		initializeParticleSystem();
+		break;
+	case '-':
+		resolutionWidth = resolutionWidth <= 16 ? 16 : resolutionWidth / 2;
+		reolutionHeight = reolutionHeight <= 8 ? 8 : reolutionHeight / 2;
+		initializeParticleSystem();
 		break;
 	}
 }
