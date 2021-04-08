@@ -400,12 +400,14 @@ void ParticleSystem::drawCustom(float particle_size, mat4 view_mat, mat4 proj_ma
 	glUseProgram(0);
 	glPushMatrix();
 	glTranslatef(spherePosition.x, spherePosition.y, spherePosition.z);
-	glutSolidSphere(2.0, 50, 50);
+	glColor3f(0.0, 1.0, 0.0);
+	glutWireSphere(2.0, 50, 50);
 	glPopMatrix();
 
 	glPushMatrix();
 	glTranslatef(rayOrigin.x, rayOrigin.y, rayOrigin.z);
-	glutSolidSphere(0.2, 50, 50);
+	glColor3f(1.0, 0.0, 0.0);
+	glutSolidSphere(0.3, 50, 50);
 	glPopMatrix();
 
 	glBegin(GL_LINES);
