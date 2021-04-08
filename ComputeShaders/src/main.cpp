@@ -85,7 +85,7 @@ void display()
 	glUseProgram(0);
 	glDisable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
-	parSys.draw(15.0f, g_cam.viewMat, g_cam.projMat);
+	parSys.draw(3.0f, g_cam.viewMat, g_cam.projMat);
 
 	g_cam.drawGrid();
 	g_cam.drawCoordinateOnScreen(g_winWidth, g_winHeight);
