@@ -30,8 +30,8 @@ unsigned int curTime = 0; //the milliseconds since the start
 unsigned int preTime = 0;
 ParticleSystem parSys;
 
-char v_shader_file[] = ".\\shaders\\v_shader.vert";
-char f_shader_file[] = ".\\shaders\\f_shader.frag";
+char v_shader_file[] = ".\\src\\v_shader.vert";
+char f_shader_file[] = ".\\src\\f_shader.frag";
 char c_shader_file[] = ".\\src\\rayshader.comp";
 
 vec3 rayOrigin = vec3(0.0f, 5.0f, 20.0f);

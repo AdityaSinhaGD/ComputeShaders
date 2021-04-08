@@ -20,9 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\c_shader.comp" />
-    <None Include="shaders\f_shader.frag" />
+    <None Include="src\f_shader.frag" />
     <None Include="src\rayshader.comp" />
-    <None Include="shaders\v_shader.vert" />
+    <None Include="src\v_shader.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Camera.cpp" />
