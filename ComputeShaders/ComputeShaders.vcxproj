@@ -21,7 +21,7 @@
   <ItemGroup>
     <None Include="shaders\c_shader.comp" />
     <None Include="shaders\f_shader.frag" />
-    <None Include="shaders\rayshader.comp" />
+    <None Include="src\rayshader.comp" />
     <None Include="shaders\v_shader.vert" />
   </ItemGroup>
   <ItemGroup>

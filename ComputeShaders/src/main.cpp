@@ -32,14 +32,14 @@ ParticleSystem parSys;
 
 char v_shader_file[] = ".\\shaders\\v_shader.vert";
 char f_shader_file[] = ".\\shaders\\f_shader.frag";
-char c_shader_file[] = ".\\shaders\\rayshader.comp";
+char c_shader_file[] = ".\\src\\rayshader.comp";
 
 vec3 rayOrigin = vec3(0.0f, 5.0f, 20.0f);
 vec3 spherePosition = vec3(0.0f, 5.0f, -8.0f);
 float sphereRadius = 2.0f;
 
-int resolutionWidth = 128;
-int reolutionHeight = 64;
+int resolutionWidth = 64;
+int reolutionHeight = 32;
 
 void initializeParticleSystem()
 {
@@ -98,7 +98,7 @@ void display()
 	glDisable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
 	//parSys.draw(3.0f, g_cam.viewMat, g_cam.projMat);
-	parSys.drawCustom(3.0f, g_cam.viewMat, g_cam.projMat, rayOrigin, spherePosition);
+	parSys.drawCustom(1.0f, g_cam.viewMat, g_cam.projMat, rayOrigin, spherePosition);
 	g_cam.drawGrid();
 	g_cam.drawCoordinateOnScreen(g_winWidth, g_winHeight);
 	g_cam.drawCoordinate();
