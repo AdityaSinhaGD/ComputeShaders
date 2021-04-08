@@ -32,7 +32,7 @@ ParticleSystem parSys;
 
 char v_shader_file[] = ".\\shaders\\v_shader.vert";
 char f_shader_file[] = ".\\shaders\\f_shader.frag";
-char c_shader_file[] = ".\\shaders\\c_shader.comp";
+char c_shader_file[] = ".\\shaders\\rayshader.comp";
 
 void initialization()
 {
