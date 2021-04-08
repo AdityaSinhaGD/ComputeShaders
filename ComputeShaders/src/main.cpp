@@ -34,12 +34,16 @@ char v_shader_file[] = ".\\shaders\\v_shader.vert";
 char f_shader_file[] = ".\\shaders\\f_shader.frag";
 char c_shader_file[] = ".\\shaders\\rayshader.comp";
 
+vec3 rayOrigin = vec3(0.0f, 5.0f, 20.0f);
+vec3 spherePosition = vec3(0.0f, 5.0f, -8.0f);
+float sphereRadius = 2.0f;
+
 void initialization()
 {
 	/*parSys.create(20, vec3(-10.0f, -10.0f, -10.0f), vec3(10.0f, 10.0f, 10.0f),
 		c_shader_file, v_shader_file, f_shader_file);*/
 
-	parSys.createCustom(64, 32, vec3(-10.0f, 0.0f, -5.0f), vec3(10.0f, 10.0f, -5.0f), c_shader_file, v_shader_file, f_shader_file);
+	parSys.createCustom(128, 64, vec3(-10.0f, 0.0f, -5.0f), vec3(10.0f, 10.0f, -5.0f), c_shader_file, v_shader_file, f_shader_file);
 
 	g_cam.set(38.0f, 13.0f, 4.0f, 0.0f, 0.0f, 0.0f, g_winWidth, g_winHeight, 45.0f, 0.01f, 10000.0f);
 	g_text.setColor(0.0f, 0.0f, 0.0f);
@@ -68,7 +72,7 @@ void idle()
 	curTime = glutGet(GLUT_ELAPSED_TIME);
 	float deltaT = (float)(curTime - preTime) / 1000.0f; // in seconds
 	//parSys.update(deltaT);
-	parSys.updateCustom(vec3(0.0f, 5.0f, 20.0f), vec3(0.0f, 5.0f, -8.0f), 2.0f);
+	parSys.updateCustom(rayOrigin, spherePosition, sphereRadius);
 	g_cam.keyOperation(g_keyStates, g_winWidth, g_winHeight);
 
 	glutPostRedisplay();
@@ -85,8 +89,8 @@ void display()
 	glUseProgram(0);
 	glDisable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
-	parSys.draw(3.0f, g_cam.viewMat, g_cam.projMat);
-
+	//parSys.draw(3.0f, g_cam.viewMat, g_cam.projMat);
+	parSys.drawCustom(3.0f, g_cam.viewMat, g_cam.projMat, rayOrigin);
 	g_cam.drawGrid();
 	g_cam.drawCoordinateOnScreen(g_winWidth, g_winHeight);
 	g_cam.drawCoordinate();
@@ -102,14 +106,6 @@ void display()
 	}
 
 	glPopMatrix();
-
-	//custom draw block
-	glPushMatrix();
-	glTranslatef(0.0f, 5.0f, -8.0f);
-	glutSolidSphere(2.0, 50, 50);
-	glPopMatrix();
-	//custom block ends
-
 	glutSwapBuffers();
 }
 

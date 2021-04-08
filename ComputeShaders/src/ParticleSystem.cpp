@@ -217,6 +217,15 @@ void ParticleSystem::draw(float particle_size, mat4 view_mat, mat4 proj_mat)
 	glDrawArrays(GL_POINTS, 0, num);
 
 	glPopMatrix();
+
+	//custom draw block
+	glUseProgram(0);
+	glPushMatrix();
+	glTranslatef(0.0f, 5.0f, -8.0f);
+	glutSolidSphere(2.0, 50, 50);
+	glPopMatrix();
+	//custom block ends
+
 }
 
 void ParticleSystem::createCustom(int width, int height, vec3 min_point, vec3 max_point, const char* compute_shader_file, const char* vertex_shader_file, const char* fragment_shader_file)
@@ -273,8 +282,8 @@ void ParticleSystem::createCustom(int width, int height, vec3 min_point, vec3 ma
 	}
 
 	//Calculating Spacing values
-	float rowSpacing = (size_max_point.x - size_min_point.x) / particles_per_row;
-	float columnSpacing = (size_max_point.y - size_min_point.y) / particles_per_column;
+	float rowSpacing = (size_max_point.x - size_min_point.x) / width;
+	float columnSpacing = (size_max_point.y - size_min_point.y) / height;
 
 	for (int i = 0; i < particles_per_row; i++)
 	{
@@ -367,4 +376,47 @@ void ParticleSystem::updateCustom(vec3 rayOrigin, vec3 spherePosition, float sph
 	cShaderProg.setFloat("sphereRadius", sphereRadius);
 	glDispatchCompute((num + 128 - 1) / 128, 1, 1); // one-dimentional GPU threading config, 128 threads per froup 
 	glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
+}
+
+void ParticleSystem::drawCustom(float particle_size, mat4 view_mat, mat4 proj_mat, vec3 rayOrigin)
+{
+	glUseProgram(vfShaderProg.id);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+
+	// set the modelview and projection matrices in the vertex shader
+	// no layout labels since they're uniform variables
+	vfShaderProg.setMatrix4fv("viewMat", 1, glm::value_ptr(view_mat));
+	vfShaderProg.setMatrix4fv("projMat", 1, glm::value_ptr(proj_mat));
+
+	// draw particles as points with VAO
+	glBindVertexArray(vao);
+	glPointSize(particle_size);
+	glDrawArrays(GL_POINTS, 0, num);
+
+	glPopMatrix();
+
+	//custom draw block
+	glUseProgram(0);
+	glPushMatrix();
+	glTranslatef(0.0f, 5.0f, -8.0f);
+	glutSolidSphere(2.0, 50, 50);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(rayOrigin.x, rayOrigin.y, rayOrigin.z);
+	glutSolidSphere(0.2, 50, 50);
+	glPopMatrix();
+
+	glBegin(GL_LINES);
+	glVertex3f(rayOrigin.x, rayOrigin.y, rayOrigin.z);
+	glVertex3f(size_min_point.x, size_min_point.y, size_min_point.z);
+	glVertex3f(rayOrigin.x, rayOrigin.y, rayOrigin.z);
+	glVertex3f(size_min_point.x, size_max_point.y, size_min_point.z);
+	glVertex3f(rayOrigin.x, rayOrigin.y, rayOrigin.z);
+	glVertex3f(size_max_point.x, size_max_point.y, size_min_point.z);
+	glVertex3f(rayOrigin.x, rayOrigin.y, rayOrigin.z);
+	glVertex3f(size_max_point.x, size_min_point.y, size_min_point.z);
+	glEnd();
+	//custom block ends
 }

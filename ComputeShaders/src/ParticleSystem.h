@@ -64,4 +64,6 @@ public:
 		const char* compute_shader_file, const char* vertex_shader_file, const char* fragment_shader_file);
 
 	void updateCustom(vec3 rayOrigin, vec3 spherePosition, float sphereRadius);
+
+	void drawCustom(float particle_size, mat4 view_mat, mat4 proj_mat, vec3 rayOrigin);
 };
