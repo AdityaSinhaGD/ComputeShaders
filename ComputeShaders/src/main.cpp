@@ -36,8 +36,10 @@ char c_shader_file[] = ".\\shaders\\c_shader.comp";
 
 void initialization()
 {
-	parSys.create(20, vec3(-10.0f, -10.0f, -10.0f), vec3(10.0f, 10.0f, 10.0f),
-		c_shader_file, v_shader_file, f_shader_file);
+	/*parSys.create(20, vec3(-10.0f, -10.0f, -10.0f), vec3(10.0f, 10.0f, 10.0f),
+		c_shader_file, v_shader_file, f_shader_file);*/
+
+	parSys.createCustom(64, 32, vec3(-10.0f, 0.0f, -5.0f), vec3(10.0f, 10.0f, -5.0f), c_shader_file, v_shader_file, f_shader_file);
 
 	g_cam.set(38.0f, 13.0f, 4.0f, 0.0f, 0.0f, 0.0f, g_winWidth, g_winHeight, 45.0f, 0.01f, 10000.0f);
 	g_text.setColor(0.0f, 0.0f, 0.0f);
