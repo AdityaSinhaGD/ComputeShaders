@@ -29,19 +29,24 @@ void main()
 	vec3 pos = Positions[g_id].xyz;
 	vec3 color = Colors[g_id].xyz;
 
-	vec3 u = normalize(pos-rayOrigin);
-	vec3 o_c = (rayOrigin - spherePosition);
+	vec3 raydirection = normalize(pos-rayOrigin);
+	vec3 oc = (rayOrigin - spherePosition);
 
-	float detr1 = pow(dot(u,o_c),2);
-	float detr2 = pow(o_c.length,2) - pow(sphereRadius,2);
+	float a = dot(raydirection,raydirection);
+	float b = 2.0*dot(oc,raydirection);
+	float c = dot(oc,oc) - sphereRadius*sphereRadius;
 
-	float det = detr1-detr2;
-	if(det>0)
+	float discriminant = b*b - 4*a*c;
+
+	if(discriminant<0)
 	{
-		Colors[g_id].xyz = vec3(0.5f,0.0f,0.0f);
+		color = Colors[g_id].xyz;
 	}else{
 
-		Colors[g_id].xyz = color;
+		color = vec3(0.5,0.0,0.0);		
 	}
+
+	Colors[g_id].xyz = color;
+	
 }
 
