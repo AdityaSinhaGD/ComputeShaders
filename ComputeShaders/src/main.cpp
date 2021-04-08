@@ -39,11 +39,11 @@ vec3 spherePosition = vec3(0.0f, 5.0f, -8.0f);
 float sphereRadius = 2.0f;
 
 int resolutionWidth = 64;
-int reolutionHeight = 32;
+int resolutionHeight = 32;
 
 void initializeParticleSystem()
 {
-	parSys.createCustom(resolutionWidth, reolutionHeight, vec3(-10.0f, 0.0f, -5.0f), vec3(10.0f, 10.0f, -5.0f), c_shader_file, v_shader_file, f_shader_file);
+	parSys.createCustom(resolutionWidth, resolutionHeight, vec3(-10.0f, 0.0f, -5.0f), vec3(10.0f, 10.0f, -5.0f), c_shader_file, v_shader_file, f_shader_file);
 }
 
 void initialization()
@@ -107,10 +107,14 @@ void display()
 	if (g_cam.isFocusMode()) {
 		string str = "Cam mode: Focus";
 		g_text.draw(10, 30, const_cast<char*>(str.c_str()), g_winWidth, g_winHeight);
+		g_text.draw(10, 50, const_cast<char*>(("Resolution:"+std::to_string(resolutionWidth)+"x"+ std::to_string(resolutionHeight)).c_str()), g_winWidth, g_winHeight);
+		g_text.draw(10, 70, const_cast<char*>(("# of particles ((w+1)*(h+1)):" + std::to_string((resolutionWidth + 1) * (resolutionHeight + 1))).c_str()), g_winWidth, g_winHeight);
 	}
 	else if (g_cam.isFPMode()) {
 		string str = "Cam mode: FP";
 		g_text.draw(10, 30, const_cast<char*>(str.c_str()), g_winWidth, g_winHeight);
+		g_text.draw(10, 50, const_cast<char*>(("Resolution:" + std::to_string(resolutionWidth) + "x" + std::to_string(resolutionHeight)).c_str()), g_winWidth, g_winHeight);
+		g_text.draw(10, 70, const_cast<char*>(("# of particles ((w+1)*(h+1)):" + std::to_string((resolutionWidth + 1) * (resolutionHeight + 1))).c_str()), g_winWidth, g_winHeight);
 	}
 
 	glPopMatrix();
@@ -178,12 +182,12 @@ void keyboard(unsigned char key, int x, int y)
 		break;
 	case '+':
 		resolutionWidth = resolutionWidth >= 8192 ? 8192 : resolutionWidth * 2;
-		reolutionHeight = reolutionHeight >= 4096 ? 4096 : reolutionHeight * 2;
+		resolutionHeight = resolutionHeight >= 4096 ? 4096 : resolutionHeight * 2;
 		initializeParticleSystem();
 		break;
 	case '-':
 		resolutionWidth = resolutionWidth <= 16 ? 16 : resolutionWidth / 2;
-		reolutionHeight = reolutionHeight <= 8 ? 8 : reolutionHeight / 2;
+		resolutionHeight = resolutionHeight <= 8 ? 8 : resolutionHeight / 2;
 		initializeParticleSystem();
 		break;
 	}
