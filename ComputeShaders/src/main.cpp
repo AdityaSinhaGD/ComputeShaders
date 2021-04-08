@@ -67,8 +67,8 @@ void idle()
 	// add any stuff to update at runtime ....
 	curTime = glutGet(GLUT_ELAPSED_TIME);
 	float deltaT = (float)(curTime - preTime) / 1000.0f; // in seconds
-	parSys.update(deltaT);
-
+	//parSys.update(deltaT);
+	parSys.updateCustom(vec3(0.0f, 5.0f, 20.0f), vec3(0.0f, 5.0f, -8.0f), 2.0f);
 	g_cam.keyOperation(g_keyStates, g_winWidth, g_winHeight);
 
 	glutPostRedisplay();
@@ -102,6 +102,14 @@ void display()
 	}
 
 	glPopMatrix();
+
+	//custom draw block
+	glPushMatrix();
+	glTranslatef(0.0f, 5.0f, -8.0f);
+	glutSolidSphere(2.0, 50, 50);
+	glPopMatrix();
+	//custom block ends
+
 	glutSwapBuffers();
 }
 

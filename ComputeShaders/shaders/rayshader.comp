@@ -1,28 +1,22 @@
 #version 430 compatibility
 
-uniform float deltaT;
-uniform vec3 minPos;
-uniform vec3 maxPos; 
+uniform vec3 rayOrigin;
+uniform vec3 spherePosition; 
+uniform float sphereRadius;
 
 layout (std430, binding = 4) buffer Pos
 {
 	vec4 Positions [ ];
 };
 
-layout (std430, binding = 5) buffer Dir
-{
-	vec4 Directions [ ];
-};
+
 
 layout (std430, binding = 6) buffer Col 
 {
 	vec4 Colors [ ];
 };
 
-layout (std430, binding = 7) buffer Speed 
-{
-	float Speeds [ ];
-};
+
 
 layout (local_size_x = 128, local_size_y = 1, local_size_z = 1) in;
 
@@ -33,47 +27,21 @@ void main()
 	uint g_id = gl_GlobalInvocationID.x;
 
 	vec3 pos = Positions[g_id].xyz;
-	vec3 dir = Directions[g_id].xyz;
-	float speed = Speeds[g_id];
+	vec3 color = Colors[g_id].xyz;
 
-	pos += dir * speed * deltaT;
+	vec3 u = normalize(pos-rayOrigin);
+	vec3 o_c = (rayOrigin - spherePosition);
 
-	if(pos.x <minPos.x) 
-	{
-		pos.x = minPos.x; 
-		dir.x = abs(dir.x);
-	}
-	else if(pos.x > maxPos.x) 
-	{
-		pos.x = maxPos.x; 
-		dir.x = -abs(dir.x);
-	}
+	float detr1 = pow(dot(u,o_c),2);
+	float detr2 = pow(o_c.length,2) - pow(sphereRadius,2);
 
-	if(pos.y <minPos.y) 
+	float det = detr1-detr2;
+	if(det>0)
 	{
-		pos.y = minPos.y; 
-		dir.y = abs(dir.y);
-	}
-	else if(pos.y > maxPos.y) 
-	{
-		pos.y = maxPos.y; 
-		dir.y = -abs(dir.y);
-	}
+		Colors[g_id].xyz = vec3(0.5f,0.0f,0.0f);
+	}else{
 
-	if(pos.z <minPos.z) 
-	{
-		pos.z = minPos.z; 
-		dir.z = abs(dir.z);
+		Colors[g_id].xyz = color;
 	}
-	else if(pos.z > maxPos.z) 
-	{
-		pos.z = maxPos.z; 
-		dir.z = -abs(dir.z);
-	}
-
-	normalize(dir);
-
-	Positions[g_id].xyz = pos;
-	Directions[g_id].xyz = dir; 
 }
 

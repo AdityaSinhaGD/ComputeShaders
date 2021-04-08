@@ -62,4 +62,6 @@ public:
 	//My Custom Methods
 	void createCustom(int width, int height, vec3 min_point, vec3 max_point,
 		const char* compute_shader_file, const char* vertex_shader_file, const char* fragment_shader_file);
+
+	void updateCustom(vec3 rayOrigin, vec3 spherePosition, float sphereRadius);
 };
